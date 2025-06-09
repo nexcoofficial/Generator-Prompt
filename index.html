@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Generator Prompt Landing Page Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#667eea',
+                        secondary: '#764ba2',
+                        accent: '#28a745',
+                        dark: '#2d3748',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glassmorph {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-gradient {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-radius: 20px;
+        }
+        
+        input, textarea, select {
+            transition: all 0.3s ease;
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating-animation {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Assistant Modal Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #assistantModal {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        #assistantChat div {
+            animation: fadeIn 0.2s ease-out;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen relative overflow-x-hidden">
+    <!-- Floating Background Elements -->
+    <div class="floating-elements absolute inset-0 overflow-hidden -z-10">
+        <div class="absolute top-1/4 right-1/4 w-80 h-80 bg-purple-100 rounded-full floating-animation" style="animation-delay: 0s;"></div>
+        <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-indigo-100 rounded-full floating-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-2/5 right-1/3 w-72 h-72 bg-pink-100 rounded-full floating-animation" style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-60 h-60 bg-blue-100 rounded-full floating-animation" style="animation-delay: 1s;"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="glassmorph rounded-b-3xl py-8 px-6 md:px-16 text-center shadow-lg relative">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl md:text-5xl font-bold text-black mb-3">
+                🚀 Generator Prompt Landing Page Premium
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                Buat landing page profesional dengan AI dalam hitungan detik
+            </p>
+            <button id="assistantBtn" class="absolute bottom-4 right-6 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-full p-3 shadow-lg hover:scale-110 transition-transform">
+                <i class="fas fa-robot text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- AI Assistant Modal -->
+    <div id="assistantModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full max-h-[80vh] flex flex-col overflow-hidden glassmorph">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="text-lg font-bold flex items-center gap-2">
+                    <i class="fas fa-robot text-blue-500"></i> AI Assistant Ayunda.xyz
+                </h3>
+                <button id="closeAssistant" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="assistantChat" class="flex-1 p-4 overflow-y-auto space-y-4"></div>
+            <div class="p-4 border-t">
+                <div class="relative">
+                    <input id="assistantInput" type="text" placeholder="Tanyakan tentang deskripsi produk atau penggunaan prompt..." 
+                        class="w-full pr-12 pl-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <button id="sendQuestion" class="absolute right-2 top-2 bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto py-8 px-4 sm:px-6">
+        <!-- Tips Section -->
+        <div class="section-gradient p-6 mb-8 rounded-xl border border-gray-100">
+            <h3 class="text-xl font-semibold text-primary mb-3"><i class="fas fa-lightbulb mr-2"></i>Tips untuk Hasil Optimal</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                    <span>Isi semua field dengan informasi yang detail dan akurat</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                    <span>Gunakan deskripsi produk yang menarik dan persuasif</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                    <span>Pastikan link order sudah benar dan aktif</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                    <span>Pilih skema warna yang sesuai dengan brand Anda</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Form Container -->
+        <form id="promptForm" class="glassmorph rounded-3xl p-6 md:p-8 shadow-xl">
+            <!-- Section A: Informasi Produk Dasar -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <div class="bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-box text-white"></i>
+                    </div>
+                    A. Informasi Produk Dasar
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Left Column -->
+                    <div>
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Nama Produk*</label>
+                            <input type="text" id="productName" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Nama produk Anda">
+                        </div>
+                        
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Kategori Produk*</label>
+                            <select id="productCategory" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm">
+                                <option value="">Pilih kategori</option>
+                                <option value="Fashion & Aksesoris">Fashion & Aksesoris</option>
+                                <option value="Elektronik">Elektronik</option>
+                                <option value="Rumah & Dekorasi">Rumah & Dekorasi</option>
+                                <option value="Kecantikan & Kesehatan">Kecantikan & Kesehatan</option>
+                                <option value="Makanan & Minuman">Makanan & Minuman</option>
+                                <option value="Buku & Edukasi">Buku & Edukasi</option>
+                                <option value="Olahraga & Outdoor">Olahraga & Outdoor</option>
+                                <option value="Otomotif">Otomotif</option>
+                                <option value="Layanan Jasa">Layanan Jasa</option>
+                                <option value="Produk Digital">Produk Digital</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Harga Modal</label>
+                            <input type="text" id="price" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Contoh: Rp 199.000">
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div>
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Style Tampilan*</label>
+                            <select id="styleTemplate" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm">
+                                <option value="">Pilih style</option>
+                                <option value="premium">Premium & Mewah</option>
+                                <option value="minimalist">Minimalist & Clean</option>
+                                <option value="modern">Modern & Trendy</option>
+                                <option value="classic">Classic & Elegant</option>
+                                <option value="colorful">Colorful & Vibrant</option>
+                                <option value="dark">Dark & Professional</option>
+                                <option value="retro">Retro & Vintage</option>
+                                <option value="futuristic">Futuristic & Tech</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Deskripsi Produk*</label>
+                            <textarea id="productDescription" required rows="4" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Jelaskan fitur dan manfaat produk Anda"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section B: Desain & Tampilan -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <div class="bg-purple-500 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-palette text-white"></i>
+                    </div>
+                    B. Desain & Tampilan
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Skema Warna</label>
+                            <select id="colorScheme" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm">
+                                <option value="modern-blue">Modern Blue (Biru Premium)</option>
+                                <option value="elegant-gold">Elegant Gold (Emas Mewah)</option>
+                                <option value="minimalist-gray">Minimalist Gray (Abu-abu Elegan)</option>
+                                <option value="vibrant-orange">Vibrant Orange (Oranye Energik)</option>
+                                <option value="nature-green">Nature Green (Hijau Alami)</option>
+                                <option value="luxury-purple">Luxury Purple (Ungu Mewah)</option>
+                                <option value="classic-black">Classic Black (Hitam Klasik)</option>
+                                <option value="warm-red">Warm Red (Merah Hangat)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Diskon (opsional)</label>
+                            <input type="text" id="discount" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Contoh: 20% atau Rp 50.000">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section C: Link & Kontak -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <div class="bg-green-500 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-link text-white"></i>
+                    </div>
+                    C. Link & Kontak
+                </h2>
+                
+                <div class="grid grid-cols-1 gap-6">
+                    <div>
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Link Order*</label>
+                            <input type="url" id="orderLink" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="https://orderonline.id/produk-anda atau link toko online lainnya">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Link Mentahan (opsional)</label>
+                                <input type="url" id="rawLink" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Link file mentahan, template, atau resource tambahan">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Link GIF Galeri Model (opsional)</label>
+                                <input type="url" id="galleryLink" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Link GIF atau video model menggunakan produk">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Link Gambar Testimoni (opsional)</label>
+                            <textarea id="testimonialImages" rows="2" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="https://example.com/testimoni1.jpg, https://example.com/testimoni2.jpg (pisahkan dengan koma)"></textarea>
+                        </div>
+                        
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-medium mb-2">Info Kontak*</label>
+                            <input type="text" id="contactInfo" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="WhatsApp: 0812-3456-7890 atau info kontak lainnya">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section D: Fitur Landing Page -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <div class="bg-orange-500 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-list-check text-white"></i>
+                    </div>
+                    D. Fitur Landing Page
+                </h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureTestimoni" class="mt-1 mr-2" checked>
+                        <label for="featureTestimoni" class="cursor-pointer">Testimoni Pelanggan</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureGaleri" class="mt-1 mr-2" checked>
+                        <label for="featureGaleri" class="cursor-pointer">Galeri Produk</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureFitur" class="mt-1 mr-2" checked>
+                        <label for="featureFitur" class="cursor-pointer">Fitur & Keunggulan</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureFAQ" class="mt-1 mr-2" checked>
+                        <label for="featureFAQ" class="cursor-pointer">FAQ (Tanya Jawab)</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureTimer" class="mt-1 mr-2" checked>
+                        <label for="featureTimer" class="cursor-pointer">Timer Countdown</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureGaransi" class="mt-1 mr-2" checked>
+                        <label for="featureGaransi" class="cursor-pointer">Garansi & Jaminan</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featurePengiriman" class="mt-1 mr-2" checked>
+                        <label for="featurePengiriman" class="cursor-pointer">Info Pengiriman</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featurePembayaran" class="mt-1 mr-2" checked>
+                        <label for="featurePembayaran" class="cursor-pointer">Metode Pembayaran</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureSosmed" class="mt-1 mr-2">
+                        <label for="featureSosmed" class="cursor-pointer">Social Media Links</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="featureVideo" class="mt-1 mr-2">
+                        <label for="featureVideo" class="cursor-pointer">Video Demo</label>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section E: Target & Positioning -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <div class="bg-pink-500 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-bullseye text-white"></i>
+                    </div>
+                    E. Target & Positioning
+                </h2>
+                
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="mb-5">
+                        <label class="block text-gray-700 font-medium mb-2">Target Audience</label>
+                        <input type="text" id="targetAudience" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Contoh: Perempuan usia 25-45 tahun, tinggal di perkotaan">
+                    </div>
+                    
+                    <div class="mb-5">
+                        <label class="block text-gray-700 font-medium mb-2">Unique Selling Point</label>
+                        <input type="text" id="uniqueSelling" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Contoh: Bahan 100% organik, harga termurah di pasar">
+                    </div>
+                    
+                    <div class="mb-5">
+                        <label class="block text-gray-700 font-medium mb-2">Catatan Tambahan</label>
+                        <textarea id="additionalNotes" rows="3" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-500 shadow-sm" placeholder="Tulis instruksi tambahan atau preferensi khusus di sini"></textarea>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Generate Button -->
+            <div class="text-center mt-10">
+                <button type="submit" class="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-bold text-white bg-gradient-to-r from-blue-500 to-blue-700 rounded-full group transition-all duration-300 hover:from-blue-600 hover:to-blue-800 transform hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50">
+                    <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-full group-hover:h-full opacity-10"></span>
+                    <span class="relative flex items-center gap-2 text-lg">
+                        <i class="fas fa-wand-magic-sparkles"></i> Generate Prompt Landing Page
+                    </span>
+                </button>
+            </div>
+        </form>
+        
+        <!-- Result Container (Initially Hidden) -->
+        <div id="resultContainer" class="glassmorph rounded-3xl p-6 md:p-8 shadow-xl mt-8 hidden animate-fadeIn">
+            <div class="result-header flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-gray-200">
+                <div>
+                    <h3 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+                        <span class="bg-gradient-to-r from-green-500 to-blue-500 text-transparent bg-clip-text">🚀 Prompt Generated Successfully!</span>
+                    </h3>
+                    <p class="text-gray-600">Prompt siap untuk digunakan di Claude, ChatGPT, atau AI builder lainnya</p>
+                </div>
+                <button id="copyBtn" class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white py-3 px-6 rounded-full font-medium transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="far fa-copy"></i> Copy Prompt
+                </button>
+            </div>
+            
+            <!-- Prompt Output -->
+            <div id="promptOutput" class="prompt-output bg-gray-50 rounded-2xl p-4 md:p-6 font-mono text-sm md:text-base max-h-96 overflow-y-auto shadow-inner border border-gray-100"></div>
+            
+            <!-- How to Use -->
+            <div class="tips mt-6 bg-blue-50 rounded-xl p-5 border border-blue-100">
+                <h4 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Cara Menggunakan Prompt:
+                </h4>
+                <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                    <li>Copy prompt di atas menggunakan tombol "Copy Prompt"</li>
+                    <li>Paste ke Claude, ChatGPT, atau AI builder lainnya</li>
+                    <li>AI akan membuat landing page sesuai spesifikasi Anda</li>
+                    <li>Jika perlu penyesuaian, tambahkan instruksi spesifik berdasarkan keinginan Anda</li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // AI Assistant Functionality
+        const assistantBtn = document.getElementById('assistantBtn');
+        const assistantModal = document.getElementById('assistantModal');
+        const closeAssistant = document.getElementById('closeAssistant');
+        const assistantChat = document.getElementById('assistantChat');
+        const assistantInput = document.getElementById('assistantInput');
+        const sendQuestion = document.getElementById('sendQuestion');
+
+        // Toggle assistant modal
+        assistantBtn.addEventListener('click', () => {
+            assistantModal.classList.toggle('hidden');
+            assistantInput.focus();
+        });
+
+        closeAssistant.addEventListener('click', () => {
+            assistantModal.classList.add('hidden');
+        });
+
+        // Add initial assistant message
+        addAssistantMessage("Halo! Saya AI Assistant dari Ayunda.xyz 🚀 Saya bisa membantu Anda membuat deskripsi produk yang menarik atau menjelaskan cara menggunakan generator prompt ini. Silakan bertanya!");
+
+        // Handle sending questions
+        sendQuestion.addEventListener('click', handleQuestion);
+        assistantInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleQuestion();
+        });
+
+        function handleQuestion() {
+            const question = assistantInput.value.trim();
+            if (!question) return;
+
+            addUserMessage(question);
+            assistantInput.value = '';
+            
+            // Show typing indicator
+            const typingId = showTypingIndicator();
+            
+            // Simulate thinking delay
+            setTimeout(() => {
+                removeTypingIndicator(typingId);
+                generateAssistantResponse(question);
+                assistantChat.scrollTop = assistantChat.scrollHeight;
+            }, 1500);
+        }
+
+        function generateAssistantResponse(question) {
+            const productName = document.getElementById('productName').value || 'produk Anda';
+            const productCategory = document.getElementById('productCategory').value || 'produk';
+            
+            let response = "";
+            
+            if (question.toLowerCase().includes('deskripsi') || question.toLowerCase().includes('rekomendasi')) {
+                response = `
+Untuk deskripsi ${productName} yang menarik, saya sarankan:\n\n
+1️⃣ Fokus pada manfaat utama produk (Apa yang didapat customer?)\n
+2️⃣ Gunakan kata-kata persuasif ("Eksklusif", "Limited Edition", "Hanya untuk Anda")\n
+3️⃣ Sertakan keunggulan unik (contoh: "100% bahan organik", "Garansi 1 tahun")\n
+4️⃣ Buat mudah dipahami dengan poin-poin\n\n
+Contoh template:\n"${productName} adalah ${productCategory} premium yang dirancang khusus untuk... (sebutkan target audience). Dengan fitur unggulan seperti ... (sebutkan 3 fitur utama), produk ini memberikan ... (manfaat utama). Dapatkan sekarang juga dan rasakan ... (manfaat emosional)."\n\n
+Butuh contoh spesifik untuk produk Anda?
+                `;
+            } 
+            else if (question.toLowerCase().includes('cara') || question.toLowerCase().includes('gunakan') || question.toLowerCase().includes('prompt')) {
+                response = `
+Untuk menggunakan prompt yang dihasilkan:\n\n
+1️⃣ Copy seluruh teks prompt\n
+2️⃣ Paste ke ChatGPT, Claude, atau AI builder favorit Anda\n
+3️⃣ Tekan Enter/Generate dan tunggu hasilnya\n
+4️⃣ Jika perlu penyesuaian, tambahkan instruksi tambahan\n\n
+Tips:\n
+• Gunakan model AI terbaru (GPT-4, Claude 3, dll)\n
+• Untuk hasil terbaik, lengkapi semua informasi di form ini\n
+• Prompt ini didesain oleh Ayunda.xyz untuk menghasilkan landing page conversion-optimized\n\n
+Punya pertanyaan lebih spesifik?
+                `;
+            }
+            else if (question.toLowerCase().includes('buat') || question.toLowerCase().includes('siapa')) {
+                response = "Saya adalah AI Assistant yang dikembangkan oleh Ayunda.xyz untuk membantu Anda membuat landing page berkualitas tinggi dengan mudah menggunakan teknologi AI. Tim kami berasal dari para ahli digital marketing dan AI engineering yang telah berpengalaman membuat ratusan landing page sukses.";
+            }
+            else {
+                response = "Maaf, saya hanya bisa membantu pertanyaan terkait:\n\n• Cara membuat deskripsi produk yang menarik\n• Panduan menggunakan generator prompt ini\n• Pertanyaan tentang landing page\n\nAnda bisa mencoba pertanyaan seperti:\n\"Bantu rekomendasikan deskripsi untuk produk saya\" atau\n\"Bagaimana cara menggunakan prompt yang sudah dibuat?\"";
+            }
+            
+            addAssistantMessage(response);
+        }
+
+        function addUserMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex justify-end';
+            messageDiv.innerHTML = `
+                <div class="bg-blue-500 text-white rounded-lg p-3 max-w-[80%]">
+                    ${text}
+                </div>
+            `;
+            assistantChat.appendChild(messageDiv);
+            assistantChat.scrollTop = assistantChat.scrollHeight;
+        }
+
+        function addAssistantMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex justify-start';
+            messageDiv.innerHTML = `
+                <div class="bg-gray-100 rounded-lg p-3 max-w-[80%]">
+                    ${text.replace(/\n/g, '<br>')}
+                </div>
+            `;
+            assistantChat.appendChild(messageDiv);
+            assistantChat.scrollTop = assistantChat.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const id = 'typing-' + Date.now();
+            const typingDiv = document.createElement('div');
+            typingDiv.id = id;
+            typingDiv.className = 'flex justify-start items-center space-x-1';
+            typingDiv.innerHTML = `
+                <div class="bg-gray-100 rounded-lg p-3">
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            `;
+            assistantChat.appendChild(typingDiv);
+            assistantChat.scrollTop = assistantChat.scrollHeight;
+            return id;
+        }
+
+        function removeTypingIndicator(id) {
+            const elem = document.getElementById(id);
+            if (elem) elem.remove();
+        }
+
+        // Form Handling
+        document.getElementById('promptForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generatePrompt();
+        });
+
+        // Template Mapping
+        const styleTemplates = {
+            'premium': 'premium mewah dengan elemen luxury dan elegant',
+            'minimalist': 'minimalist clean dengan space yang luas dan focus pada content',
+            'modern': 'modern trendy dengan clean design dan interactive elements',
+            'classic': 'classic elegant dengan typography serif dan traditional elements',
+            'colorful': 'colorful vibrant dengan playful design dan energetic vibes',
+            'dark': 'dark professional dengan contrast tinggi dan modern appeal',
+            'retro': 'retro vintage dengan nostalgic elements dan classic styling',
+            'futuristic': 'futuristic tech dengan modern animations dan tech elements'
+        };
+
+        const colorSchemes = {
+            'modern-blue': 'gradien biru modern (#667eea ke #764ba2)',
+            'elegant-gold': 'gradien emas elegan (#f7971e ke #ffd200)',
+            'minimalist-gray': 'gradien abu-abu minimalis (#bdc3c7 ke #2c3e50)',
+            'vibrant-orange': 'gradien oranye vibrant (#ff7e5f ke #feb47b)',
+            'nature-green': 'gradien hijau alami (#56ab2f ke #a8e6cf)',
+            'luxury-purple': 'gradien ungu mewah (#8360c3 ke #2ebf91)',
+            'classic-black': 'gradien hitam klasik (#434343 ke #000000)',
+            'warm-red': 'gradien merah hangat (#fc466b ke #3f5efb)'
+        };
+        
+        // Get selected features
+        function getSelectedFeatures() {
+            return {
+                testimoni: document.getElementById('featureTestimoni').checked,
+                galeri: document.getElementById('featureGaleri').checked,
+                fitur: document.getElementById('featureFitur').checked,
+                faq: document.getElementById('featureFAQ').checked,
+                timer: document.getElementById('featureTimer').checked,
+                garansi: document.getElementById('featureGaransi').checked,
+                pengiriman: document.getElementById('featurePengiriman').checked,
+                pembayaran: document.getElementById('featurePembayaran').checked,
+                sosmed: document.getElementById('featureSosmed').checked,
+                video: document.getElementById('featureVideo').checked
+            };
+        }
+
+        function generatePrompt() {
+            const formData = {
+                productName: document.getElementById('productName').value || 'Produk Premium',
+                productCategory: document.getElementById('productCategory').value || 'Produk Digital',
+                styleTemplate: document.getElementById('styleTemplate').value,
+                colorScheme: document.getElementById('colorScheme').value,
+                price: document.getElementById('price').value || 'Rp 199.000',
+                discount: document.getElementById('discount').value || '',
+                productDescription: document.getElementById('productDescription').value || 'Produk premium dengan fitur unggulan',
+                orderLink: document.getElementById('orderLink').value || 'https://orderonline.id/produk-anda',
+                rawLink: document.getElementById('rawLink').value || '',
+                galleryLink: document.getElementById('galleryLink').value || '',
+                testimonialImages: document.getElementById('testimonialImages').value || '',
+                contactInfo: document.getElementById('contactInfo').value || 'WhatsApp: 0812-3456-7890',
+                targetAudience: document.getElementById('targetAudience').value || 'Pengguna usia 20-45 tahun yang peduli gaya hidup sehat',
+                uniqueSelling: document.getElementById('uniqueSelling').value || 'Kualitas premium dengan harga terjangkau',
+                additionalNotes: document.getElementById('additionalNotes').value || ''
+            };
+            
+            const features = getSelectedFeatures();
+            
+            // Map selected features to text
+            const featuresText = [];
+            if (features.testimoni) featuresText.push('Testimoni Pelanggan');
+            if (features.galeri) featuresText.push('Galeri Produk');
+            if (features.fitur) featuresText.push('Fitur & Keunggulan');
+            if (features.faq) featuresText.push('FAQ (Tanya Jawab)');
+            if (features.timer) featuresText.push('Timer Countdown');
+            if (features.garansi) featuresText.push('Garansi & Jaminan');
+            if (features.pengiriman) featuresText.push('Info Pengiriman');
+            if (features.pembayaran) featuresText.push('Metode Pembayaran');
+            if (features.sosmed) featuresText.push('Social Media Links');
+            if (features.video) featuresText.push('Video Demo');
+            
+            const styleDesc = styleTemplates[formData.styleTemplate] || 'premium mewah';
+            const colorDesc = colorSchemes[formData.colorScheme] || 'gradien biru modern';
+            
+            // Generate Prompt
+            const prompt = `Buatkan landing page premium yang sangat menarik dan profesional untuk produk "${formData.productName}" dengan spesifikasi berikut:
+
+🎯 INFORMASI PRODUK:
+- Nama Produk: ${formData.productName}
+- Kategori: ${formData.productCategory}
+- Harga Modal: ${formData.price || 'Tidak disebutkan'}
+- Diskon: ${formData.discount ? formData.discount : 'Tidak ada'}
+- Deskripsi: ${formData.productDescription}
+- Target Audience: ${formData.targetAudience}
+- Unique Selling Point: ${formData.uniqueSelling}
+
+🎨 DESAIN & VISUAL:
+- Color Scheme: ${colorDesc}
+- Style Template: ${styleDesc}
+- Tampilan harus premium, modern, dan professional
+- Responsive design untuk mobile dan desktop
+- Smooth animations dan micro-interactions
+- Typography yang elegant dan readable
+${formData.galleryLink ? `- Integrasi GIF/Galeri Model dari: ${formData.galleryLink}` : ''}
+${formData.testimonialImages ? `- Gunakan testimoni gambar dari: ${formData.testimonialImages}` : ''}
+
+📱 STRUKTUR LANDING PAGE:
+1. HEADER & HERO SECTION:
+   - Navigation bar yang sticky dan elegant
+   - Hero section dengan headline yang powerful
+   - Subheadline yang menjelaskan value proposition
+   - Call-to-action button yang prominent menuju: ${formData.orderLink}
+   - Hero image/video yang berkualitas tinggi
+
+2. PRODUCT SHOWCASE:
+   - Product gallery dengan zoom functionality
+   - 360° view jika memungkinkan
+   - Multiple product angles dan detail shots
+   ${formData.galleryLink ? `- Integrasi GIF model gallery dari link yang disediakan` : ''}
+
+3. FEATURES & BENEFITS:
+   ${featuresText.length > 0 ? featuresText.map(f => `   - ${f}`).join('\n') : '   - Semua fitur standar sesuai dengan preferensi'}
+
+4. CALL-TO-ACTION SECTIONS:
+   - Primary CTA: Link Order ke ${formData.orderLink}
+   - Secondary CTA: ${formData.contactInfo}
+   ${formData.rawLink ? `- Link Mentahan: ${formData.rawLink}` : ''}
+   - Multiple CTA placement strategis di seluruh page
+   - Urgent messaging dan scarcity elements
+
+5. TESTIMONI & SOCIAL PROOF:
+   ${formData.testimonialImages ? `- Gunakan gambar testimoni real dari link yang disediakan` : '- Testimoni pelanggan'}
+   - Rating bintang dan review pelanggan
+   - Social proof counters
+   - Trust badges dan security seals
+
+6. FOOTER:
+   - Contact information lengkap: ${formData.contactInfo}
+   - Link order utama: ${formData.orderLink}
+   ${formData.rawLink ? `- Link resource tambahan: ${formData.rawLink}` : ''}
+   ${features.sosmed ? '- Social media links' : ''}
+   - Legal information dan policies
+
+🔧 FITUR TEKNIS:
+- Optimized loading speed dengan lazy loading
+- SEO-friendly structure dan meta tags
+- Analytics tracking (Google Analytics ready)
+- Social sharing functionality
+- Mobile-first responsive design
+- Cross-browser compatibility
+- Accessibility standards compliant
+- Interactive elements dengan smooth transitions
+- WhatsApp integration untuk contact
+- Popup modal untuk detail produk
+
+💡 COPYWRITING GUIDELINES:
+- Headline yang attention-grabbing dan benefit-focused
+- Bullet points yang mudah di-scan
+- Social proof dan credibility markers
+- Urgency dan scarcity messaging ("Stok Terbatas", "Promo Hari Ini")
+- Emotional triggers yang sesuai target audience
+- Clear value proposition di setiap section
+- Call-to-action yang persuasif dan action-oriented
+
+📊 CONVERSION OPTIMIZATION:
+- Above-the-fold CTA yang visible menuju ${formData.orderLink}
+- Trust signals di area penting
+- Risk reversal elements (garansi, money-back guarantee)
+- Social proof positioning yang strategis
+- Mobile conversion optimization dengan touch-friendly buttons
+- Fast loading dan smooth UX
+- Exit-intent popup untuk special offer
+- Sticky order button yang mengikuti scroll
+
+📱 MOBILE OPTIMIZATION:
+- Mobile-first approach dengan touch optimization
+- Swipe gestures untuk gallery
+- Thumb-friendly button placement
+- Optimized forms untuk mobile keyboard
+- Fast loading dengan compressed images
+- Progressive Web App features
+
+🔗 LINK INTEGRATION:
+- Semua CTA button mengarah ke: ${formData.orderLink}
+- Contact section dengan: ${formData.contactInfo}
+${formData.rawLink ? `- Download mentahan di: ${formData.rawLink}` : ''}
+${formData.galleryLink ? `- Model gallery di: ${formData.galleryLink}` : ''}
+- WhatsApp floating button untuk instant contact
+- Social sharing dengan pre-filled message
+
+${formData.additionalNotes ? `📝 CATATAN KHUSUS:\n${formData.additionalNotes}\n` : ''}
+IMPORTANT: Buatkan dalam format HTML, CSS, dan JavaScript yang complete dan functional. Semua link harus functional dan mengarah ke URL yang benar. Pastikan semua elemen interactive berfungsi dengan baik. Fokus pada user experience yang exceptional dan conversion rate yang tinggi. 
+
+Gunakan teknik psikologi marketing seperti: 
+- Scarcity (stok terbatas) 
+- Urgency (promo terbatas waktu)  
+- Social proof (testimoni real) 
+- Authority (badge dan sertifikasi) 
+- Reciprocity (bonus dan gift)
+
+Generate full landing page code yang siap deploy, professional, dan conversion-focused!`;
+
+            // Display result
+            document.getElementById('promptOutput').textContent = prompt;
+            document.getElementById('resultContainer').style.display = 'block';
+            
+            // Scroll to result
+            document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Copy to Clipboard
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const promptText = document.getElementById('promptOutput').textContent;
+            navigator.clipboard.writeText(promptText).then(function() {
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.textContent;
+                const originalHTML = btn.innerHTML;
+                
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
+                btn.style.background = 'linear-gradient(to right, #28a745, #28a745)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.background = 'linear-gradient(to right, #667eea, #764ba2)';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
